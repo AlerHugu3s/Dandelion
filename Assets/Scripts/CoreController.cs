@@ -38,6 +38,7 @@ public class CoreController : MonoBehaviour
     void Start()
     {
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.Dandelion_Get_Wind, OnDandelionGetWind);
+        GameEventDispatcher.GetInstance().AddEventListener(GameEventType.GAME_OVER, OnGameOver);
     }
 
     // Update is called once per frame
@@ -54,12 +55,18 @@ public class CoreController : MonoBehaviour
     void OnDestroy()
     {
         GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.Dandelion_Get_Wind, OnDandelionGetWind);
+        GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.GAME_OVER, OnGameOver);
     }
 
     void OnDandelionGetWind(BaseGameEvent gEvent)
     {
         GrivityControl gcComponent = ((GameObject)gEvent.Sender).GetComponent<GrivityControl>();
         gcComponent.GetForce(player.transform.position, playerWindForce);
+    }
+
+    void OnGameOver(BaseGameEvent gEvent)
+    {
+        Debug.Log("GameOver!");
     }
 
 

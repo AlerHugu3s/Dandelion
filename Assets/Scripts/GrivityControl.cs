@@ -12,6 +12,9 @@ public class GrivityControl : MonoBehaviour
     [SerializeField,Range(-180,180)] private float maxRotation;
 
     [SerializeField,Range(0,100)] private float HorizontalForce = 1.0f;
+
+    [SerializeField, Range(0.0f, 10.0f)] private float AddictiveGrivity = 1.0f;
+
     private Vector2 HorizontalForceVec;
     private Vector3 stickPos;
 
@@ -47,6 +50,7 @@ public class GrivityControl : MonoBehaviour
     void FixedUpdate()
     {
         rig2D.AddTorque(Physics2D.gravity.y * (centerOfMass.x - centerPos.x) / 0.5f , ForceMode2D.Force);
+        rig2D.AddForce(Physics.gravity * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveGrivity, ForceMode2D.Force);
     }
 
     void OnDrawGizmos()
@@ -70,7 +74,6 @@ public class GrivityControl : MonoBehaviour
     
     public void GetForce(Vector3 orgPos, float force)
     {
-        Debug.Log("Dandelion_Get_Wind");
 
         Vector3 forceVec = Vector3.Normalize(transform.position - orgPos) * force;
         float radian = Mathf.Deg2Rad * Vector3.Angle(centerOfMass, forceVec);
