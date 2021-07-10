@@ -37,6 +37,7 @@ public class GrivityControl : MonoBehaviour
         HorizontalForceVec = Vector2.right * HorizontalForce;
         rig2D = GetComponent<Rigidbody2D>();
         rig2D.centerOfMass = centerOfMass;
+        InitPosition();
     }
 
     // Start is called before the first frame update
@@ -114,6 +115,17 @@ public class GrivityControl : MonoBehaviour
 
         rig2D.AddTorque(torqueForce * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
         rig2D.AddForce(forceVec, ForceMode2D.Force);
+    }
+
+    private void InitPosition()
+    {
+        float radius = GetComponent<CircleCollider2D>().radius;
+        float point = radius / 2;
+
+        tr_1.position = new Vector3(-point, point, 0);
+        tr_2.position = new Vector3(point, point, 0);
+        tr_3.position = new Vector3(-point, -point, 0);
+        tr_4.position = new Vector3(point, -point, 0);
     }
 
 
