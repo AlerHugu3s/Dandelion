@@ -47,8 +47,12 @@ public class ShowText : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        System.IO.File.WriteAllText(filePath,info,Encoding.UTF8);
-        Debug.Log(filePath);
+        FileStream fs = new FileStream(filePath, FileMode.Create);
+        StreamWriter sw = new StreamWriter(fs);
+        sw.Write(info);
+        sw.Flush();
+        sw.Close();
+        fs.Close();
     }
 
 
