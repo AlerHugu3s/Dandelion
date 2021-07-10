@@ -30,7 +30,7 @@ public class CoreController : MonoBehaviour
     public CinemachineVirtualCamera vCam = null;
     public CinemachineConfiner cineConfiner = null;
 
-    private string playerUrl = "Prefabs/Cloud", dandelionUrl = "Prefabs/Dandelion";
+    private string playerUrl = "Prefabs/Cloud", dandelionUrl = "Prefabs/Dandelion3";
     GameObject player , dandelion;
 
     [SerializeField] private Transform playerPos, dandelionPos;
