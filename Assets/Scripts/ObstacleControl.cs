@@ -17,13 +17,15 @@ public class ObstacleControl : MonoBehaviour
 
     [SerializeField, Range(0, 1)] private float weightDec = 0.25f;
 
+    [SerializeField, Range(10, 500)] private float bouncePower = 500;
+
     void Start()
     {
-        tilemap = GetComponent<Tilemap>();
+
     }
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.tag.Equals("Dandelion"))
+        if (coll.collider.tag.Equals("Dandelion") && !CoreController.isInvincible)
         {
             GameObject dandelion = coll.gameObject;
             GrivityControl dancelionGc = dandelion.GetComponent<GrivityControl>();
@@ -31,13 +33,25 @@ public class ObstacleControl : MonoBehaviour
             Vector3 collPoint = coll.GetContact(0).point;
 
             Vector3 collLocalPos = dandelion.transform.InverseTransformPoint(collPoint);
-            
 
             Vector2 pulseVec = collPoint - dandelionPoint;
-            Vector2 dandelionVelocity = dandelion.GetComponent<Rigidbody2D>().velocity;
+            Vector2 dandelionVelocity = dancelionGc.velocityBeforePhysicsUpdate;
+
+            Debug.Log(pulseVec);
+            Debug.Log(dandelionVelocity);
+
+            Vector3 normalVec = Vector3.Cross(pulseVec, dandelionVelocity);
+            float alphaAngle = Vector3.Angle(dandelionVelocity, pulseVec);
+            float bounceAngle = 2 * (90 - alphaAngle);
+            if (normalVec.z < 0)
+                bounceAngle =  - bounceAngle;
+
+            Debug.Log(bouncePower * Vector3.Normalize(Quaternion.AngleAxis(bounceAngle, Vector3.forward) * dandelionVelocity));
+            Vector2 BounceVec = (90 - alphaAngle) / 90 * bouncePower * (Quaternion.AngleAxis(bounceAngle, Vector3.forward) * dandelionVelocity);
+            coll.collider.GetComponent<Rigidbody2D>().AddForce(BounceVec,ForceMode2D.Force);
+
 
             float impulsePower = Vector3.Magnitude(Vector3.Project(dandelionVelocity, pulseVec));
-
 
             float tempWeightDec;
             if (impulsePower >= maxSpeed * speedThreshold)
@@ -65,7 +79,14 @@ public class ObstacleControl : MonoBehaviour
                 dancelionGc.pWeight_3 -= tempWeightDec;
                 if (dancelionGc.pWeight_3 < 0) dancelionGc.pWeight_3 = 0;
             }
-
+            CoreController.isInvincible = true;
+            StartCoroutine(DisableInvincible());
         } 
+    }
+
+    IEnumerator DisableInvincible()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        CoreController.isInvincible = false;
     }
 }

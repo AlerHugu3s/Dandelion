@@ -24,6 +24,8 @@ public class GrivityControl : MonoBehaviour
 
     private Vector3 centerOfMass,centerPos;
 
+    public Vector3 velocityBeforePhysicsUpdate;
+
     private Rigidbody2D rig2D;
 
     void Awake()
@@ -59,6 +61,8 @@ public class GrivityControl : MonoBehaviour
     {
         rig2D.AddTorque(Physics2D.gravity.y * (centerOfMass.x - centerPos.x) / 0.5f , ForceMode2D.Force);
         rig2D.AddForce(Physics.gravity * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveGravity, ForceMode2D.Force);
+
+        velocityBeforePhysicsUpdate = rig2D.velocity;
     }
 
     void OnDrawGizmos()

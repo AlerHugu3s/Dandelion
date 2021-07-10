@@ -10,13 +10,15 @@ public class CloudController : MonoBehaviour
 
     private BoxCollider2D collider;
 
+    [SerializeField] private GameObject cursorImage;
+
     void Awake()
     {
         collider = GetComponent<BoxCollider2D>();
         collider.enabled = false;
         collider.isTrigger = true;
 
-
+        cursorImage = Instantiate(cursorImage);
     }
 
     // Start is called before the first frame update
@@ -85,6 +87,9 @@ public class CloudController : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotateSpeed);
+
+        cursorImage.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        cursorImage.transform.rotation = Quaternion.AngleAxis(angle + 225, Vector3.forward); ;
     }
 
     void OnTriggerStay2D(Collider2D coll)
