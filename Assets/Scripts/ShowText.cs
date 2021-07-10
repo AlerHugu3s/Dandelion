@@ -23,7 +23,7 @@ public class ShowText : MonoBehaviour
     {
         text = GetComponentInChildren<Text>();
         Debug.Log(Application.dataPath);
-        filePath = Application.dataPath + "/RecordData/" + GetCurTime();
+        filePath = Application.dataPath + "/" + GetCurTime();
         Dandelion = GameObject.FindGameObjectWithTag("Dandelion");
     }
 
