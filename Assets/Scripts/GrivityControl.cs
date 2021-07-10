@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEditor;
 using UnityEditor.U2D.Path;
 using UnityEngine;
@@ -30,18 +31,18 @@ public class GrivityControl : MonoBehaviour
 
     void Awake()
     {
-
         stickPos = transform.InverseTransformPoint(stick.position + Vector3.Normalize(stick.localPosition) * 0.5f);
        centerOfMass = (tr_1.localPosition * pWeight_1
                        + tr_2.localPosition * pWeight_2 + tr_3.localPosition * pWeight_3
                        + tr_4.localPosition * pWeight_4 + stickPos) / 5.0f;
        centerPos = (tr_1.localPosition + tr_2.localPosition + tr_3.localPosition + tr_4.localPosition) / 4.0f;
 
-
        HorizontalForceVec = Vector2.right * HorizontalForce;
        rig2D = GetComponent<Rigidbody2D>();
        rig2D.centerOfMass = centerOfMass;
         InitPosition();
+
+
     }
 
     // Start is called before the first frame update

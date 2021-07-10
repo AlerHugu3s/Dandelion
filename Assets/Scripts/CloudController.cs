@@ -10,6 +10,8 @@ public class CloudController : MonoBehaviour
 
     private BoxCollider2D collider;
 
+    public Vector2 maxBorder,minBorder;
+
     [SerializeField] private GameObject cursorImage;
 
     void Awake()
@@ -75,8 +77,8 @@ public class CloudController : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
-        Vector3 newPos = new Vector3(Mathf.Clamp(moveX + transform.position.x ,-14.2f,14.2f)
-            , Mathf.Clamp(moveY + transform.position.y, -8.0f, 8.0f), 0);
+        Vector3 newPos = new Vector3(Mathf.Clamp(moveX + transform.position.x ,minBorder.x,maxBorder.x)
+            , Mathf.Clamp(moveY + transform.position.y, minBorder.y, maxBorder.y), 0);
         transform.position = Vector3.Slerp(transform.position, newPos,
             Time.deltaTime * moveSpeed);
     }
