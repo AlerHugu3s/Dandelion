@@ -47,7 +47,6 @@ public class GrivityControl : MonoBehaviour
     void FixedUpdate()
     {
         rig2D.AddTorque(Physics2D.gravity.y * (centerOfMass.x - centerPos.x) / 0.5f , ForceMode2D.Force);
-        rig2D.AddForce(HorizontalForceVec * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
     }
 
     void OnDrawGizmos()
@@ -58,14 +57,28 @@ public class GrivityControl : MonoBehaviour
 
     private void RecalculatePhysics()
     {
-        centerOfMass = (tr_1.localPosition * pWeight_1 + tr_2.localPosition * pWeight_2 + tr_3.localPosition * pWeight_3 + tr_4.localPosition * pWeight_4 + stick.localPosition) / 5.0f;
+        centerOfMass = (tr_1.localPosition * pWeight_1 
+                        + tr_2.localPosition * pWeight_2 + tr_3.localPosition * pWeight_3 
+                        + tr_4.localPosition * pWeight_4 + stick.localPosition) / 5.0f;
         rig2D.centerOfMass = centerOfMass;
 
 
         float rotZ = transform.rotation.eulerAngles.z;
         if (rotZ >= 180) rotZ = rotZ - 360;
         transform.rotation = Quaternion.Euler(0,0,Mathf.Clamp( rotZ, -maxRotation, maxRotation));
-
-
     }
+    
+    public void GetForce(Vector3 orgPos, float force)
+    {
+        Debug.Log("Dandelion_Get_Wind");
+
+        Vector3 forceVec = Vector3.Normalize(transform.position - orgPos) * force;
+        float radian = Mathf.Deg2Rad * Vector3.Angle(centerOfMass, forceVec);
+        float torqueForce = Mathf.Sin(radian) * Vector3.Magnitude(forceVec);
+
+        rig2D.AddTorque(torqueForce * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
+        rig2D.AddForce(forceVec , ForceMode2D.Force);
+    }
+
+
 }

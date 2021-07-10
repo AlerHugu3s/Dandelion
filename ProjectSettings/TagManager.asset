@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Dandelion
+  - Obstacle
+  - Deadzone
   layers:
   - Default
   - TransparentFX
@@ -11,9 +14,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - BackGround
+  - Level
+  - Player
   - 
   - 
   - 
@@ -40,4 +43,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 1243048601
+    locked: 0
+  - name: Water
+    uniqueID: 2490809411
+    locked: 0
+  - name: Level
+    uniqueID: 3230055879
+    locked: 0
+  - name: Player
+    uniqueID: 4114246883
     locked: 0
