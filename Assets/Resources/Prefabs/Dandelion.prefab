@@ -138,6 +138,8 @@ MonoBehaviour:
   stick: {fileID: 5783455683294816162}
   maxRotation: 45
   HorizontalForce: 5
+  AddictiveGravity: 1
+  AddictiveForce: 1
   pWeight_1: 1
   pWeight_2: 1
   pWeight_3: 1

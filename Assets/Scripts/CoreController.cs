@@ -20,6 +20,8 @@ public class CoreController : MonoBehaviour
     [SerializeField, Range(0f, 100.0f)]
     private float playerWindForce = 10.0f;
 
+    [SerializeField, Range(0, 30.0f)] private float maxWindLength = 5f;
+
     private Rigidbody2D dandelionRig2D;
     void Awake()
     {
@@ -61,7 +63,9 @@ public class CoreController : MonoBehaviour
     void OnDandelionGetWind(BaseGameEvent gEvent)
     {
         GrivityControl gcComponent = ((GameObject)gEvent.Sender).GetComponent<GrivityControl>();
-        gcComponent.GetForce(player.transform.position, playerWindForce);
+        float windWeight = 1.0f - Mathf.Clamp(Vector3.Distance(
+            player.transform.position, dandelion.transform.position),0,maxWindLength) / maxWindLength;
+        gcComponent.GetForce(player.transform.position, playerWindForce * windWeight);
     }
 
     void OnGameOver(BaseGameEvent gEvent)

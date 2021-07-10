@@ -73,8 +73,9 @@ public class CloudController : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
-
-        transform.position = Vector3.Slerp(transform.position, transform.position + new Vector3(moveX, moveY, 0),
+        Vector3 newPos = new Vector3(Mathf.Clamp(moveX + transform.position.x ,-14.2f,14.2f)
+            , Mathf.Clamp(moveY + transform.position.y, -8.0f, 8.0f), 0);
+        transform.position = Vector3.Slerp(transform.position, newPos,
             Time.deltaTime * moveSpeed);
     }
 

@@ -13,7 +13,9 @@ public class GrivityControl : MonoBehaviour
 
     [SerializeField,Range(0,100)] private float HorizontalForce = 1.0f;
 
-    [SerializeField, Range(0.0f, 10.0f)] private float AddictiveGrivity = 1.0f;
+    [SerializeField, Range(0.0f, 10.0f)] private float AddictiveGravity = 1.0f;
+
+    [SerializeField, Range(0.0f, 10.0f)] private float AddictiveForce = 1.0f;
 
     private Vector2 HorizontalForceVec;
     private Vector3 stickPos;
@@ -50,7 +52,7 @@ public class GrivityControl : MonoBehaviour
     void FixedUpdate()
     {
         rig2D.AddTorque(Physics2D.gravity.y * (centerOfMass.x - centerPos.x) / 0.5f , ForceMode2D.Force);
-        rig2D.AddForce(Physics.gravity * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveGrivity, ForceMode2D.Force);
+        rig2D.AddForce(Physics.gravity * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveGravity, ForceMode2D.Force);
     }
 
     void OnDrawGizmos()
@@ -80,7 +82,7 @@ public class GrivityControl : MonoBehaviour
         float torqueForce = Mathf.Sin(radian) * Vector3.Magnitude(forceVec);
 
         rig2D.AddTorque(torqueForce * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
-        rig2D.AddForce(forceVec , ForceMode2D.Force);
+        rig2D.AddForce(forceVec + forceVec * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveForce, ForceMode2D.Force);
     }
 
 
