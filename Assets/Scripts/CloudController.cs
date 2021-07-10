@@ -50,10 +50,12 @@ public class CloudController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             collider.enabled = true;
+            AudioController.PlayAudioClip("Wind");
         }
         else if (Input.GetMouseButtonUp(0))
         {
             collider.enabled = false;
+            
         }
 
         // Û±Í”“º¸¥¶¿Ì
@@ -104,4 +106,5 @@ public class CloudController : MonoBehaviour
                 break;
         }
     }
+
 }
