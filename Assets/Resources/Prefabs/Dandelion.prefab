@@ -144,6 +144,7 @@ MonoBehaviour:
   pWeight_2: 1
   pWeight_3: 1
   pWeight_4: 1
+  velocityBeforePhysicsUpdate: {x: 0, y: 0, z: 0}
 --- !u!58 &8851513097607711143
 CircleCollider2D:
   m_ObjectHideFlags: 0

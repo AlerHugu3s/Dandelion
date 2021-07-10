@@ -30,13 +30,15 @@ public class GrivityControl : MonoBehaviour
 
     void Awake()
     {
-        stickPos = stick.localPosition + Vector3.down * 0.5f;
-        centerOfMass = (tr_1.localPosition + tr_2.localPosition + tr_3.localPosition  + tr_4.localPosition + stickPos) / 5.0f;
-        centerPos = (tr_1.localPosition + tr_2.localPosition + tr_3.localPosition + tr_4.localPosition) / 4.0f;
+        stickPos = transform.InverseTransformPoint(stick.position + Vector3.Normalize(stick.localPosition) * 0.5f);
+       centerOfMass = (tr_1.localPosition * pWeight_1
+                       + tr_2.localPosition * pWeight_2 + tr_3.localPosition * pWeight_3
+                       + tr_4.localPosition * pWeight_4 + stickPos) / 5.0f;
+       centerPos = (tr_1.localPosition + tr_2.localPosition + tr_3.localPosition + tr_4.localPosition) / 4.0f;
 
-        HorizontalForceVec = Vector2.right * HorizontalForce;
-        rig2D = GetComponent<Rigidbody2D>();
-        rig2D.centerOfMass = centerOfMass;
+       HorizontalForceVec = Vector2.right * HorizontalForce;
+       rig2D = GetComponent<Rigidbody2D>();
+       rig2D.centerOfMass = centerOfMass;
     }
 
     // Start is called before the first frame update
@@ -53,13 +55,12 @@ public class GrivityControl : MonoBehaviour
         if (Vector3.Magnitude(rig2D.velocity)>maxspeed0)
         {
             maxspeed0 = Vector3.Magnitude(rig2D.velocity);
-            Debug.Log(maxspeed0);
         }
     }
 
     void FixedUpdate()
     {
-        rig2D.AddTorque(Physics2D.gravity.y * (centerOfMass.x - centerPos.x) / 0.5f , ForceMode2D.Force);
+        rig2D.AddTorque(- Physics2D.gravity.y * (centerOfMass.x - centerPos.x) / 0.5f , ForceMode2D.Force);
         rig2D.AddForce(Physics.gravity * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveGravity, ForceMode2D.Force);
 
         velocityBeforePhysicsUpdate = rig2D.velocity;
@@ -73,9 +74,11 @@ public class GrivityControl : MonoBehaviour
 
     private void RecalculatePhysics()
     {
+        Debug.Log(transform.InverseTransformPoint(stickPos));
+        stickPos = transform.InverseTransformPoint(stick.position + Vector3.Normalize(stick.localPosition) * 0.5f);
         centerOfMass = (tr_1.localPosition * pWeight_1 
                         + tr_2.localPosition * pWeight_2 + tr_3.localPosition * pWeight_3 
-                        + tr_4.localPosition * pWeight_4 + stick.localPosition) / 5.0f;
+                        + tr_4.localPosition * pWeight_4 + stickPos) / 5.0f;
         rig2D.centerOfMass = centerOfMass;
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class CoreController : MonoBehaviour
@@ -14,6 +15,9 @@ public class CoreController : MonoBehaviour
     }
 
     public static bool isInvincible = false;
+
+    public CinemachineVirtualCamera vCam = null;
+    public CinemachineTargetGroup cineTG = null;
 
     private string playerUrl = "Prefabs/Cloud", dandelionUrl = "Prefabs/Dandelion";
     GameObject player , dandelion;
