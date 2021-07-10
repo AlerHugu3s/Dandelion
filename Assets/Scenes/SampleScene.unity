@@ -2045,6 +2045,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425e4f56587def045bfe978b866fc196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBorder: {x: 14.2, y: 8}
+  minBorder: {x: -14.2, y: -8}
+  levelType: 1
+  vCam: {fileID: 0}
+  cineConfiner: {fileID: 0}
   playerPos: {fileID: 1389291241}
   dandelionPos: {fileID: 2139030494}
   playerWindForce: 85.6

@@ -8,6 +8,8 @@ public class CloudController : MonoBehaviour
 
     [SerializeField, Range(0, 20.0f)] private float moveSpeed = 5f;
 
+    private GameObject colliderObj;
+
     private BoxCollider2D collider;
 
     public Vector2 maxBorder,minBorder;
@@ -16,7 +18,8 @@ public class CloudController : MonoBehaviour
 
     void Awake()
     {
-        collider = GetComponent<BoxCollider2D>();
+        colliderObj = transform.Find("Collider2D").gameObject;
+        collider = colliderObj.GetComponent<BoxCollider2D>();
         collider.enabled = false;
         collider.isTrigger = true;
 
@@ -50,10 +53,12 @@ public class CloudController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             collider.enabled = true;
+            AudioController.PlayAudioClip("Wind");
         }
         else if (Input.GetMouseButtonUp(0))
         {
             collider.enabled = false;
+            
         }
 
         // Û±Í”“º¸¥¶¿Ì
@@ -87,21 +92,26 @@ public class CloudController : MonoBehaviour
     {
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotateSpeed);
+        float constraintAngle = Mathf.Clamp(angle, -45, 45);
 
-        cursorImage.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 InputPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        cursorImage.transform.position = InputPos;
         cursorImage.transform.rotation = Quaternion.AngleAxis(angle + 225, Vector3.forward); ;
-    }
 
-    void OnTriggerStay2D(Collider2D coll)
-    {
-        switch (coll.tag)
+        bool isFlip = true;
+        if (transform.InverseTransformPoint(InputPos).x < 0)
         {
-            case "Dandelion":
-                GameEventDispatcher.GetInstance()
-                    .DispatchEvent(new BaseGameEvent(CoreController.GameEventType.DANDELION_GET_PLAYER_WIND, null, coll.gameObject));
-                break;
+            isFlip = false;
+            constraintAngle = -constraintAngle;
         }
+        else
+            isFlip = true;
+        GetComponent<SpriteRenderer>().flipX = isFlip;
+
+        Quaternion rotationSelf = Quaternion.AngleAxis(constraintAngle, Vector3.forward);
+        Quaternion rotationCollision = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotationSelf, Time.deltaTime * rotateSpeed);
+        colliderObj.transform.rotation = Quaternion.Slerp(colliderObj.transform.rotation, rotationCollision, Time.deltaTime * rotateSpeed);
+
     }
 }
