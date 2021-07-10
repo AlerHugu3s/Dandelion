@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class CoreController : MonoBehaviour
@@ -14,6 +15,20 @@ public class CoreController : MonoBehaviour
     }
 
     public static bool isInvincible = false;
+    public enum LevelType
+    {
+        LongLevel,
+        ShortLevel
+    }
+
+    [SerializeField] private Vector2 maxBorder, minBorder;
+
+    [SerializeField]
+    private LevelType levelType = LevelType.ShortLevel;
+
+
+    public CinemachineVirtualCamera vCam = null;
+    public CinemachineConfiner cineConfiner = null;
 
     private string playerUrl = "Prefabs/Cloud", dandelionUrl = "Prefabs/Dandelion";
     GameObject player , dandelion;
@@ -31,7 +46,26 @@ public class CoreController : MonoBehaviour
         player = InstantiateObjByURL(playerUrl, playerPos.position, new Quaternion(0, 0, 0,0));
         dandelion = InstantiateObjByURL(dandelionUrl, dandelionPos.position, new Quaternion(0, 0, 0, 0));
 
+        player.GetComponent<CloudController>().maxBorder = maxBorder;
+        player.GetComponent<CloudController>().minBorder = minBorder;
+
         dandelionRig2D = dandelion.GetComponent<Rigidbody2D>();
+
+        switch (levelType)
+        {
+            case LevelType.ShortLevel:
+                vCam.enabled = false;
+                cineConfiner.enabled = false;
+
+                Camera.main.gameObject.transform.position = -Vector3.forward;
+                break;
+            case LevelType.LongLevel:
+                vCam.enabled = true;
+                cineConfiner.enabled = true;
+                vCam.Follow = player.transform;
+
+                break;
+        }
 
         Cursor.visible = false;
     }
