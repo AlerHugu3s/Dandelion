@@ -81,7 +81,7 @@ public class ObstacleControl : MonoBehaviour
             }
             CoreController.isInvincible = true;
             StartCoroutine(DisableInvincible());
-            SpriteController._instance.RefreshPetalState();
+            //SpriteController._instance.RefreshPetalState();
         } 
     }
 
