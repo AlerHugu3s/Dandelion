@@ -8,6 +8,8 @@ public class SpriteController : MonoBehaviour
     private GameObject[] petals;
     private GameObject stem;
     private float[] pWeights;
+    private GrivityControl grivityControl;
+    private float[] states;
 
     // Start is called before the first frame update
     private void Awake()
@@ -18,6 +20,7 @@ public class SpriteController : MonoBehaviour
     void Start()
     {
         InitPetal();
+        grivityControl = GetComponent<GrivityControl>();
     }
 
     // Update is called once per frame
@@ -29,14 +32,16 @@ public class SpriteController : MonoBehaviour
     void InitPetal()
     {
         GameObject petal = gameObject.transform.Find("Petal").gameObject;
+        petals = new GameObject[petal.transform.childCount];
+        states = new float[petal.transform.childCount];
         for (int i = 0; i < petal.transform.childCount; i++)
         {
-            //petals[i] = petal.transform.GetChild(i).gameObject;
+            petals[i] = petal.transform.GetChild(i).gameObject;
             if (petals[i] != null)
             {
                 string picPath = "Sprites/" + i + "_0";
                 var sr = petals[i].GetComponent<SpriteRenderer>();
-                sr.sprite = GetNewSprite(picPath);
+                sr.sprite = GetNewSprite(picPath,sr.sprite.textureRect);
                 //sr.material = 
 
             }
@@ -45,18 +50,18 @@ public class SpriteController : MonoBehaviour
                 Debug.Log("Im null");
             }
         }
-        //stem = gameObject.transform.Find("Stem").gameObject;
+        stem = gameObject.transform.Find("Stem").gameObject;
         if (stem != null)
         {
             string picPath = "Sprites/" + "4";
-            stem.GetComponent<SpriteRenderer>().sprite = GetNewSprite(picPath);
+            var sr = stem.GetComponent<SpriteRenderer>();
+            sr.sprite = GetNewSprite(picPath, sr.sprite.textureRect);
         }
     }
 
     void GetPetalWeight()
     {
-        var gc = GetComponent<GrivityControl>();
-        pWeights = gc.GetWeights();
+        pWeights = grivityControl?.GetWeights();
     }
 
     public void RefreshPetalState()
@@ -66,27 +71,36 @@ public class SpriteController : MonoBehaviour
         {
             if (pWeights[i] > 0)
             {
-                if (pWeights[i] <= 0.5f)
+                if (pWeights[i] <= 0.5f && pWeights[i] != states[i])
                 {
                     // 一半
                     string picPath = "Sprites/" + i + "_1";
-                    petals[i].GetComponent<SpriteRenderer>().sprite = GetNewSprite(picPath);
+                    var sr = petals[i].GetComponent<SpriteRenderer>();
+                    var sprite = GetNewSprite(picPath, sr.sprite.textureRect);
+                    sr.sprite = sprite;
+                    states[i] = pWeights[i];
                 }
             }
-            else
+            else 
             {
                 // 空了
-                string picPath = "Sprites/" + i + "_2";
-                petals[i].GetComponent<SpriteRenderer>().sprite = GetNewSprite(picPath);
+                if (pWeights[i] != states[i])
+                {
+                    string picPath = "Sprites/" + i + "_2";
+                    var sr = petals[i].GetComponent<SpriteRenderer>();
+                    var sprite = GetNewSprite(picPath, sr.sprite.textureRect);
+                    sr.sprite = sprite;
+                    states[i] = pWeights[i];
+                }                
             }
         }
     }
 
 
-    private Sprite GetNewSprite(string picPath)
+    private Sprite GetNewSprite(string picPath,Rect rect)
     {
         Texture2D texture = Resources.Load(picPath) as Texture2D;
-        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        return Sprite.Create(texture,rect, Vector2.zero);
 
     }
 }
