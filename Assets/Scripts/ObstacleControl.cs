@@ -10,7 +10,7 @@ public class ObstacleControl : MonoBehaviour
 {
     private Tilemap tilemap;
 
-    [SerializeField,Range(0,20)]
+    [SerializeField,Range(0,30)]
     private float maxSpeed = 10.0f;
 
     [SerializeField, Range(0, 1)] private float speedThreshold = 0.5f;
