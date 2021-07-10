@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 5
   moveSpeed: 5
+  cursorImage: {fileID: 2390931641636208146, guid: 8c980c5fb374c0843ba18a879e4b7bd9, type: 3}
 --- !u!61 &3045022604322010853
 BoxCollider2D:
   m_ObjectHideFlags: 0

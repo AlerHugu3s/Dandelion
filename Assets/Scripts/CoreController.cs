@@ -12,6 +12,8 @@ public class CoreController : MonoBehaviour
         Dandelion_Get_Wind
     }
 
+    public static bool isInvincible = false;
+
     private string playerUrl = "Prefabs/Cloud", dandelionUrl = "Prefabs/Dandelion";
     GameObject player , dandelion;
 
@@ -29,6 +31,8 @@ public class CoreController : MonoBehaviour
         dandelion = InstantiateObjByURL(dandelionUrl, dandelionPos.position, new Quaternion(0, 0, 0, 0));
 
         dandelionRig2D = dandelion.GetComponent<Rigidbody2D>();
+
+        Cursor.visible = false;
     }
 
     private GameObject InstantiateObjByURL(string url,Vector3 pos,Quaternion rot)
@@ -72,6 +76,4 @@ public class CoreController : MonoBehaviour
     {
         Debug.Log("GameOver!");
     }
-
-
 }
