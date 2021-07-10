@@ -30,7 +30,11 @@ public class ObstacleControl : MonoBehaviour
             Vector3 dandelionPoint = dandelion.transform.position;
             Vector3 collPoint = coll.GetContact(0).point;
 
+            Vector3 dandelionLocalPos = dandelion.transform.localPosition;
+            Vector3 collLocalPos = dandelion.transform.InverseTransformPoint(collPoint);
+
             Vector2 pulseVec = collPoint - dandelionPoint;
+            Vector2 pulseLocalVec = collLocalPos - dandelionLocalPos;
             Vector2 dandelionVelocity = dandelion.GetComponent<Rigidbody2D>().velocity;
 
             float impulsePower = Vector3.Magnitude(Vector3.Project(dandelionVelocity, pulseVec));
@@ -42,22 +46,22 @@ public class ObstacleControl : MonoBehaviour
             else
                 tempWeightDec = weightDec;
 
-            if (pulseVec.x >= 0 && pulseVec.y >= 0)
+            if (pulseLocalVec.x >= 0 && pulseLocalVec.y >= 0)
             {
                 dancelionGc.pWeight_2 -= tempWeightDec;
                 if (dancelionGc.pWeight_2 < 0) dancelionGc.pWeight_2 = 0;
             }
-            else if (pulseVec.x >= 0 && pulseVec.y < 0)
+            else if (pulseLocalVec.x >= 0 && pulseLocalVec.y < 0)
             {
                 dancelionGc.pWeight_1 -= tempWeightDec;
                 if (dancelionGc.pWeight_1 < 0) dancelionGc.pWeight_1 = 0;
             }
-            else if (pulseVec.x < 0 && pulseVec.y >= 0)
+            else if (pulseLocalVec.x < 0 && pulseLocalVec.y >= 0)
             {
                 dancelionGc.pWeight_4 -= tempWeightDec;
                 if (dancelionGc.pWeight_4 < 0) dancelionGc.pWeight_4 = 0;
             }
-            else if (pulseVec.x < 0 && pulseVec.y < 0)
+            else if (pulseLocalVec.x < 0 && pulseLocalVec.y < 0)
             {
                 dancelionGc.pWeight_3 -= tempWeightDec;
                 if (dancelionGc.pWeight_3 < 0) dancelionGc.pWeight_3 = 0;

@@ -139,7 +139,7 @@ MonoBehaviour:
   maxRotation: 45
   HorizontalForce: 5
   AddictiveGrivity: 1
-  pWeight_1: 1
+  AddictiveForce: 1  pWeight_1: 1
   pWeight_2: 1
   pWeight_3: 1
   pWeight_4: 1
