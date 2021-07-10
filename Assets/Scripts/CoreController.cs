@@ -20,7 +20,7 @@ public class CoreController : MonoBehaviour
 
     [SerializeField] private Transform playerPos, dandelionPos;
 
-    [SerializeField, Range(0f, 100.0f)]
+    [SerializeField, Range(0f, 1000.0f)]
     private float playerWindForce = 10.0f;
 
     [SerializeField, Range(0, 30.0f)] private float maxWindLength = 5f;

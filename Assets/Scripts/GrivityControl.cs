@@ -47,9 +47,15 @@ public class GrivityControl : MonoBehaviour
     }
 
     // Update is called once per frame
+    float maxspeed0 = 0;
     void Update()
     {
         RecalculatePhysics();
+        if (Vector3.Magnitude(rig2D.velocity)>maxspeed0)
+        {
+            maxspeed0 = Vector3.Magnitude(rig2D.velocity);
+            Debug.Log(maxspeed0);
+        }
     }
 
     void FixedUpdate()
