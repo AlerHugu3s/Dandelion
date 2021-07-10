@@ -2510,8 +2510,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPos: {fileID: 1389291241}
   dandelionPos: {fileID: 2139030494}
-  playerWindForce: 85.6
-  maxWindLength: 12.6
+  playerWindForce: 400
+  maxWindLength: 16
 --- !u!4 &752436787
 Transform:
   m_ObjectHideFlags: 0
