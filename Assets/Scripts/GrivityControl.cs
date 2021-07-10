@@ -89,6 +89,11 @@ public class GrivityControl : MonoBehaviour
         rig2D.AddForce(forceVec + forceVec * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveForce, ForceMode2D.Force);
     }
 
+    public float[] GetWeights()
+    {
+        float[] weights = new float[4] { pWeight_1, pWeight_2, pWeight_3, pWeight_4 };
+        return weights;
+    }
     public void GetForceDirectly(Vector3 orgPos, float force)
     {
 
