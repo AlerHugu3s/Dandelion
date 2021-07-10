@@ -9,7 +9,8 @@ public class CoreController : MonoBehaviour
         GAME_OVER,
         GAME_WIN,
         PAUSE,
-        Dandelion_Get_Wind
+        DANDELION_GET_PLAYER_WIND,
+        DANDELION_GET_WIND
     }
 
     public static bool isInvincible = false;
@@ -43,7 +44,8 @@ public class CoreController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameEventDispatcher.GetInstance().AddEventListener(GameEventType.Dandelion_Get_Wind, OnDandelionGetWind);
+        GameEventDispatcher.GetInstance().AddEventListener(GameEventType.DANDELION_GET_PLAYER_WIND, OnDandelionGetPlayerWind);
+        GameEventDispatcher.GetInstance().AddEventListener(GameEventType.DANDELION_GET_WIND, OnDandelionGetWind);
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.GAME_OVER, OnGameOver);
     }
 
@@ -60,16 +62,32 @@ public class CoreController : MonoBehaviour
 
     void OnDestroy()
     {
-        GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.Dandelion_Get_Wind, OnDandelionGetWind);
+        GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.DANDELION_GET_PLAYER_WIND, OnDandelionGetPlayerWind);
+        GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.DANDELION_GET_WIND, OnDandelionGetWind);
         GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.GAME_OVER, OnGameOver);
     }
 
-    void OnDandelionGetWind(BaseGameEvent gEvent)
+    void OnDandelionGetPlayerWind(BaseGameEvent gEvent)
     {
         GrivityControl gcComponent = ((GameObject)gEvent.Sender).GetComponent<GrivityControl>();
         float windWeight = 1.0f - Mathf.Clamp(Vector3.Distance(
             player.transform.position, dandelion.transform.position),0,maxWindLength) / maxWindLength;
-        gcComponent.GetForce(player.transform.position, playerWindForce * windWeight);
+        gcComponent.GetForceByDistance(player.transform.position, playerWindForce * windWeight);
+    }
+
+    void OnDandelionGetWind(BaseGameEvent gEvent)
+    {
+        MechanicsController mechanics = (MechanicsController)gEvent.Sender;
+        GrivityControl gcComponent = (dandelion).GetComponent<GrivityControl>();
+
+        if (mechanics.windMode == MechanicsController.WindMode.LineMode)
+        {
+            gcComponent.GetForceDirectly(mechanics.gameObject.transform.position, mechanics.WindForce);
+        }
+        else if (mechanics.windMode == MechanicsController.WindMode.GlobalMode)
+        {
+            gcComponent.GetForceByVec(mechanics.windVec,mechanics.WindForce);
+        }
     }
 
     void OnGameOver(BaseGameEvent gEvent)

@@ -98,7 +98,7 @@ public class CloudController : MonoBehaviour
         {
             case "Dandelion":
                 GameEventDispatcher.GetInstance()
-                    .DispatchEvent(new BaseGameEvent(CoreController.GameEventType.Dandelion_Get_Wind, null, coll.gameObject));
+                    .DispatchEvent(new BaseGameEvent(CoreController.GameEventType.DANDELION_GET_PLAYER_WIND, null, coll.gameObject));
                 break;
         }
     }

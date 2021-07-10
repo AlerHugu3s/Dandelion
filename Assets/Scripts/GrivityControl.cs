@@ -78,7 +78,7 @@ public class GrivityControl : MonoBehaviour
         transform.rotation = Quaternion.Euler(0,0,Mathf.Clamp( rotZ, -maxRotation, maxRotation));
     }
     
-    public void GetForce(Vector3 orgPos, float force)
+    public void GetForceByDistance(Vector3 orgPos, float force)
     {
 
         Vector3 forceVec = Vector3.Normalize(transform.position - orgPos) * force;
@@ -87,6 +87,28 @@ public class GrivityControl : MonoBehaviour
 
         rig2D.AddTorque(torqueForce * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
         rig2D.AddForce(forceVec + forceVec * (4.0f - (pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4)) / 4.0f * AddictiveForce, ForceMode2D.Force);
+    }
+
+    public void GetForceDirectly(Vector3 orgPos, float force)
+    {
+
+        Vector3 forceVec = Vector3.Normalize(transform.position - orgPos) * force;
+        float radian = Mathf.Deg2Rad * Vector3.Angle(centerOfMass, forceVec);
+        float torqueForce = Mathf.Sin(radian) * Vector3.Magnitude(forceVec);
+
+        rig2D.AddTorque(torqueForce * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
+        rig2D.AddForce(forceVec, ForceMode2D.Force);
+    }
+
+    public void GetForceByVec(Vector3 dir, float force)
+    {
+
+        Vector3 forceVec = dir * force;
+        float radian = Mathf.Deg2Rad * Vector3.Angle(centerOfMass, forceVec);
+        float torqueForce = Mathf.Sin(radian) * Vector3.Magnitude(forceVec);
+
+        rig2D.AddTorque(torqueForce * (centerOfMass.x - centerPos.x) / 0.5f, ForceMode2D.Force);
+        rig2D.AddForce(forceVec, ForceMode2D.Force);
     }
 
 
