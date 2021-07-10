@@ -41,7 +41,7 @@ public class SpriteController : MonoBehaviour
             {
                 string picPath = "Sprites/" + i + "_0";
                 var sr = petals[i].GetComponent<SpriteRenderer>();
-                sr.sprite = GetNewSprite(picPath,sr.sprite.textureRect);
+                sr.sprite = GetNewSprite(picPath);          
                 //sr.material = 
 
             }
@@ -50,12 +50,13 @@ public class SpriteController : MonoBehaviour
                 Debug.Log("Im null");
             }
         }
-        stem = gameObject.transform.Find("Stem").gameObject;
+        stem = GameObject.Find("Stem");
+       
         if (stem != null)
         {
             string picPath = "Sprites/" + "4";
             var sr = stem.GetComponent<SpriteRenderer>();
-            sr.sprite = GetNewSprite(picPath, sr.sprite.textureRect);
+            sr.sprite = GetNewSprite(picPath);
         }
     }
 
@@ -76,7 +77,7 @@ public class SpriteController : MonoBehaviour
                     // 一半
                     string picPath = "Sprites/" + i + "_1";
                     var sr = petals[i].GetComponent<SpriteRenderer>();
-                    var sprite = GetNewSprite(picPath, sr.sprite.textureRect);
+                    var sprite = GetNewSprite(picPath);
                     sr.sprite = sprite;
                     states[i] = pWeights[i];
                 }
@@ -88,8 +89,9 @@ public class SpriteController : MonoBehaviour
                 {
                     string picPath = "Sprites/" + i + "_2";
                     var sr = petals[i].GetComponent<SpriteRenderer>();
-                    var sprite = GetNewSprite(picPath, sr.sprite.textureRect);
+                    var sprite = GetNewSprite(picPath);
                     sr.sprite = sprite;
+
                     states[i] = pWeights[i];
                 }                
             }
@@ -97,10 +99,9 @@ public class SpriteController : MonoBehaviour
     }
 
 
-    private Sprite GetNewSprite(string picPath,Rect rect)
+    private Sprite GetNewSprite(string picPath)
     {
-        Texture2D texture = Resources.Load(picPath) as Texture2D;
-        return Sprite.Create(texture,rect, Vector2.zero);
+        return Resources.Load<Sprite>(picPath);
 
     }
 }
