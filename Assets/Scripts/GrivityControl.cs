@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEditor;
-using UnityEditor.U2D.Path;
 using UnityEngine;
 
 public class GrivityControl : MonoBehaviour

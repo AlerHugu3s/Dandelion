@@ -137,6 +137,7 @@ public class MainMenuController : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        UnityEngine.Cursor.visible = true;
         isGameOver = false;
         Time.timeScale = 1;
         OpenOutGamePanel();
@@ -207,11 +208,13 @@ public class MainMenuController : MonoBehaviour
     {
         if (isPause)
         {
+            UnityEngine.Cursor.visible = false;
             HideAll();
             Time.timeScale = 1;
         }
         else
         {
+            UnityEngine.Cursor.visible = true;
             OpenInGamePanel();
             Time.timeScale = 0;
         }
