@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 5
-  moveSpeed: 5
+  moveSpeed: 10
   maxBorder: {x: 0, y: 0}
   minBorder: {x: 0, y: 0}
   cursorImage: {fileID: 2390931641636208146, guid: 8c980c5fb374c0843ba18a879e4b7bd9, type: 3}
