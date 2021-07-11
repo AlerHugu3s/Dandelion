@@ -39,7 +39,7 @@ public class SpriteController : MonoBehaviour
             petals[i] = petal.transform.GetChild(i).gameObject;
             if (petals[i] != null)
             {
-                string picPath = "Sprites/" + i + "_0";
+                string picPath = "Sprites/Dandelion/" + i + "_0";
                 var sr = petals[i].GetComponent<SpriteRenderer>();
                 sr.sprite = GetNewSprite(picPath);          
                 //sr.material = 
@@ -54,7 +54,7 @@ public class SpriteController : MonoBehaviour
        
         if (stem != null)
         {
-            string picPath = "Sprites/" + "4";
+            string picPath = "Sprites/Dandelion/" + "4";
             var sr = stem.GetComponent<SpriteRenderer>();
             sr.sprite = GetNewSprite(picPath);
         }
@@ -75,7 +75,7 @@ public class SpriteController : MonoBehaviour
                 if (pWeights[i] <= 0.5f && pWeights[i] != states[i])
                 {
                     // 一半
-                    string picPath = "Sprites/" + i + "_1";
+                    string picPath = "Sprites/Dandelion/" + i + "_1";
                     var sr = petals[i].GetComponent<SpriteRenderer>();
                     var sprite = GetNewSprite(picPath);
                     sr.sprite = sprite;
@@ -87,7 +87,7 @@ public class SpriteController : MonoBehaviour
                 // 空了
                 if (pWeights[i] != states[i])
                 {
-                    string picPath = "Sprites/" + i + "_2";
+                    string picPath = "Sprites/Dandelion/" + i + "_2";
                     var sr = petals[i].GetComponent<SpriteRenderer>();
                     var sprite = GetNewSprite(picPath);
                     sr.sprite = sprite;
