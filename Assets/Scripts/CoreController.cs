@@ -95,7 +95,7 @@ public class CoreController : MonoBehaviour
     {
         GrivityControl gcComponent = ((GameObject)gEvent.Sender).GetComponent<GrivityControl>();
         float windWeight = 1.0f - Mathf.Clamp(Vector3.Distance(
-            player.transform.position, dandelion.transform.position),0,maxWindLength) / maxWindLength;
+                               player.transform.position, dandelion.transform.position),0,maxWindLength) / maxWindLength;
         gcComponent.GetForceByDistance(player.transform.position, playerWindForce * windWeight);
     }
 
