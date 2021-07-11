@@ -46,6 +46,12 @@ public class MainMenuController : MonoBehaviour
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.GAME_OVER, OnGameOver);
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.PAUSE, OnGamePauseStateChange);
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.GAME_WIN, OnGameWin);
+
+        if (!AudioController._instance.ChangeBGM("OutGameMusic"))
+        {
+            AudioController._instance.RegisterAudioClip("OutGameMusic", "Audio/Music/1ø™≥°“Ù¿÷");
+            AudioController._instance.ChangeBGM("OutGameMusic");
+        }
     }
 
     void Update()
@@ -105,6 +111,12 @@ public class MainMenuController : MonoBehaviour
         Time.timeScale = 1;
         HideAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (!AudioController._instance.ChangeBGM("InGameMusic"))
+        {
+            AudioController._instance.RegisterAudioClip("InGameMusic", "Audio/Music/2”Œœ∑÷–“Ù¿÷");
+            AudioController._instance.ChangeBGM("InGameMusic");
+        }
     }
 
     public void LoadNextLevel()
@@ -115,6 +127,12 @@ public class MainMenuController : MonoBehaviour
         int level = SceneManager.GetActiveScene().buildIndex + 1;
         if (level > SceneManager.sceneCountInBuildSettings) level = SceneManager.sceneCountInBuildSettings;
         SceneManager.LoadScene(level);
+
+        if (!AudioController._instance.ChangeBGM("InGameMusic"))
+        {
+            AudioController._instance.RegisterAudioClip("InGameMusic", "Audio/Music/2”Œœ∑÷–“Ù¿÷");
+            AudioController._instance.ChangeBGM("InGameMusic");
+        }
     }
 
     public void BackToMainMenu()
@@ -123,6 +141,12 @@ public class MainMenuController : MonoBehaviour
         Time.timeScale = 1;
         OpenOutGamePanel();
         SceneManager.LoadScene(0);
+
+        if (!AudioController._instance.ChangeBGM("OutGameMusic"))
+        {
+            AudioController._instance.RegisterAudioClip("OutGameMusic", "Audio/Music/1ø™≥°“Ù¿÷");
+            AudioController._instance.ChangeBGM("OutGameMusic");
+        }
     }
 
     public void GamePauseChange()
@@ -157,6 +181,13 @@ public class MainMenuController : MonoBehaviour
         isGameOver = true;
         OpenGameOverPanel();
         Time.timeScale = 0;
+
+
+        if (!AudioController._instance.PlayAudioClip("GameOver"))
+        {
+            AudioController._instance.RegisterAudioClip("GameOver", "Audio/SoundFx/6 ß∞‹");
+            AudioController._instance.PlayAudioClip("GameOver");
+        }
     }
 
     private void OnGameWin(BaseGameEvent gEvent)
@@ -164,6 +195,12 @@ public class MainMenuController : MonoBehaviour
         isGameOver = true;
         OpenWinPanel();
         Time.timeScale = 0;
+
+        if (!AudioController._instance.PlayAudioClip("Win"))
+        {
+            AudioController._instance.RegisterAudioClip("Win", "Audio/SoundFx/7 §¿˚…˘“Ù");
+            AudioController._instance.PlayAudioClip("Win");
+        }
     }
 
     private void OnGamePauseStateChange(BaseGameEvent gEvent)

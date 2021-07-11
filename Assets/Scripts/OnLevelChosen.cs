@@ -23,6 +23,11 @@ public class OnLevelChosen : MonoBehaviour,IPointerClickHandler
             }
             SceneManager.LoadScene(sceneIndex);
             MainMenuController._instance.HideAll();
+            if (!AudioController._instance.ChangeBGM("InGameMusic"))
+            {
+                AudioController._instance.RegisterAudioClip("InGameMusic", "Audio/Music/2”Œœ∑÷–“Ù¿÷");
+                AudioController._instance.ChangeBGM("InGameMusic");
+            }
         }
     }
 }
