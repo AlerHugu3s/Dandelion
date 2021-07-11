@@ -26,10 +26,12 @@ public class MechanicsController : MonoBehaviour
 
     [SerializeField,Range(0,10)]
     private float activeTime, pauseTime;
+
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponentInChildren<Animator>();
     }
     void OnTriggerStay2D(Collider2D coll)
     {
@@ -42,6 +44,7 @@ public class MechanicsController : MonoBehaviour
                 case "Dandelion":
                     GameEventDispatcher.GetInstance()
                         .DispatchEvent(new BaseGameEvent(MainMenuController.GameEventType.DANDELION_GET_WIND, null, this));
+                    StartShoot();
                     break;
             }
         }
@@ -49,7 +52,7 @@ public class MechanicsController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D coll)
     {
-
+        EndShoot();
     }
 
     IEnumerator pauseEnumerator()
@@ -58,5 +61,16 @@ public class MechanicsController : MonoBehaviour
         isPause = true;
         yield return new WaitForSecondsRealtime(pauseTime);
         isPause = false;
+    }
+
+    void StartShoot()
+    {
+        animator?.gameObject.SetActive(true);
+        animator?.SetTrigger("Shoot");
+    }
+
+    void EndShoot()
+    {
+        animator?.gameObject.SetActive(false);
     }
 }
