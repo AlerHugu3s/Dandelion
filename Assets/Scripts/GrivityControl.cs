@@ -55,6 +55,11 @@ public class GrivityControl : MonoBehaviour
     float maxspeed0 = 0;
     void Update()
     {
+        if ((pWeight_1 + pWeight_2 + pWeight_3 + pWeight_4) == 0)
+        {
+            GameEventDispatcher.GetInstance().DispatchEvent(new BaseGameEvent(MainMenuController.GameEventType.GAME_OVER, null, this));
+        }
+
         RecalculatePhysics();
         if (Vector3.Magnitude(rig2D.velocity)>maxspeed0)
         {
