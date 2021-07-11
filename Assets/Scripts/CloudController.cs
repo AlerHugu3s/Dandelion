@@ -61,11 +61,11 @@ public class CloudController : MonoBehaviour
         //Êó±ê×ó¼ü´¦Àí
         if(Input.GetMouseButtonDown(0))
         {
-            collider.enabled = true;
+            collider.gameObject.SetActive(true);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            collider.enabled = false;
+            collider.gameObject.SetActive(false);
         }
         else if(Input.GetMouseButton(0) && !isWindSound)
         {
