@@ -41,7 +41,7 @@ public class MechanicsController : MonoBehaviour
             {
                 case "Dandelion":
                     GameEventDispatcher.GetInstance()
-                        .DispatchEvent(new BaseGameEvent(CoreController.GameEventType.DANDELION_GET_WIND, null, this));
+                        .DispatchEvent(new BaseGameEvent(MainMenuController.GameEventType.DANDELION_GET_WIND, null, this));
                     break;
             }
         }

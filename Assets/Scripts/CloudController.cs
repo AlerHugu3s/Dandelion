@@ -16,6 +16,8 @@ public class CloudController : MonoBehaviour
 
     [SerializeField] private GameObject cursorImage;
 
+    private bool isWindSound = false;
+
     void Awake()
     {
         colliderObj = transform.Find("Collider2D").gameObject;
@@ -45,6 +47,13 @@ public class CloudController : MonoBehaviour
         ProcessRotate();
     }
 
+    IEnumerator WindSoundFx()
+    {
+        isWindSound = true;
+        yield return new WaitForSecondsRealtime(5);
+        isWindSound = false;
+    }
+
     void ProcessMouseInput()
     {
         float mouseY = Input.GetAxisRaw("Mouse ScrollWheel");
@@ -53,12 +62,15 @@ public class CloudController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             collider.enabled = true;
-            AudioController.PlayAudioClip("Wind");
         }
         else if (Input.GetMouseButtonUp(0))
         {
             collider.enabled = false;
-            
+        }
+        else if(Input.GetMouseButton(0) && !isWindSound)
+        {
+            AudioController._instance.PlayAudioClip("Wind");
+            StartCoroutine(WindSoundFx());
         }
 
         // Û±Í”“º¸¥¶¿Ì
