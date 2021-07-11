@@ -8,7 +8,7 @@ public class DeadZoneControl : MonoBehaviour
     {
         if (coll.tag.Equals("Dandelion"))
         {
-            GameEventDispatcher.GetInstance().DispatchEvent(new BaseGameEvent(CoreController.GameEventType.GAME_OVER,null,this));
+            GameEventDispatcher.GetInstance().DispatchEvent(new BaseGameEvent(MainMenuController.GameEventType.GAME_OVER,null,this));
         }
     }
 }
