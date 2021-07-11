@@ -9,6 +9,7 @@ public class CloudController : MonoBehaviour
     [SerializeField, Range(0, 20.0f)] private float moveSpeed = 5f;
 
     private GameObject colliderObj;
+    private GameObject windEffects;
 
     private BoxCollider2D collider;
 
@@ -21,6 +22,7 @@ public class CloudController : MonoBehaviour
     void Awake()
     {
         colliderObj = transform.Find("Collider2D").gameObject;
+        windEffects = colliderObj.transform.Find("WindEffects").gameObject;
         collider = colliderObj.GetComponent<BoxCollider2D>();
         collider.enabled = false;
         collider.isTrigger = true;
@@ -61,11 +63,13 @@ public class CloudController : MonoBehaviour
         //Êó±ê×ó¼ü´¦Àí
         if(Input.GetMouseButtonDown(0))
         {
-            collider.gameObject.SetActive(true);
+            collider.enabled = true;
+            windEffects.transform.localPosition += 0.5f * Vector3.back;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            collider.gameObject.SetActive(false);
+            collider.enabled = false;
+            windEffects.transform.localPosition += 0.5f * Vector3.forward;
         }
         else if(Input.GetMouseButton(0) && !isWindSound)
         {
