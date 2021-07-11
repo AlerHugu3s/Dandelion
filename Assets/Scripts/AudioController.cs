@@ -36,4 +36,17 @@ public class AudioController : MonoBehaviour
         }
         return false;
     }
+
+    public bool ChangeBGM(string name)
+    {
+        AudioClip clip;
+        if (audioDictionary.TryGetValue(name, out clip))
+        {
+            audioClipSource.clip = clip;
+            audioClipSource.loop = true;
+            audioClipSource.Play();
+            return true;
+        }
+        return false;
+    }
 }

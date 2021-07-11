@@ -27,6 +27,12 @@ public class ObstacleControl : MonoBehaviour
     {
         if (coll.collider.tag.Equals("Dandelion") && !CoreController.isInvincible)
         {
+            if (!AudioController._instance.PlayAudioClip("GetHit"))
+            {
+                AudioController._instance.RegisterAudioClip("GetHit", "Audio/SoundFx/4Åö×²");
+                AudioController._instance.PlayAudioClip("GetHit");
+            }
+
             GameObject dandelion = coll.gameObject;
             GrivityControl dancelionGc = dandelion.GetComponent<GrivityControl>();
             Vector3 dandelionPoint = dandelion.transform.position;

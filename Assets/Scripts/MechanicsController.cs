@@ -33,6 +33,19 @@ public class MechanicsController : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
     }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (!isPause)
+        {
+            if (!AudioController._instance.PlayAudioClip("Shoot"))
+            {
+                AudioController._instance.RegisterAudioClip("Shoot", "Audio/SoundFx/5ÅéµÄÒ»Éù");
+                AudioController._instance.PlayAudioClip("Shoot");
+            }
+        }
+    }
+
     void OnTriggerStay2D(Collider2D coll)
     {
         if (!isPause)
