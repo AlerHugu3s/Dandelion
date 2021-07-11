@@ -2,18 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using static MainMenuController;
 
 public class CoreController : MonoBehaviour
 {
-    public enum GameEventType
-    {
-        GAME_OVER,
-        GAME_WIN,
-        PAUSE,
-        DANDELION_GET_PLAYER_WIND,
-        DANDELION_GET_WIND
-    }
-
     public static bool isInvincible = false;
     public enum LevelType
     {
@@ -80,7 +72,6 @@ public class CoreController : MonoBehaviour
     {
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.DANDELION_GET_PLAYER_WIND, OnDandelionGetPlayerWind);
         GameEventDispatcher.GetInstance().AddEventListener(GameEventType.DANDELION_GET_WIND, OnDandelionGetWind);
-        GameEventDispatcher.GetInstance().AddEventListener(GameEventType.GAME_OVER, OnGameOver);
     }
 
     // Update is called once per frame
@@ -98,7 +89,6 @@ public class CoreController : MonoBehaviour
     {
         GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.DANDELION_GET_PLAYER_WIND, OnDandelionGetPlayerWind);
         GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.DANDELION_GET_WIND, OnDandelionGetWind);
-        GameEventDispatcher.GetInstance().RemoveEventListener(GameEventType.GAME_OVER, OnGameOver);
     }
 
     void OnDandelionGetPlayerWind(BaseGameEvent gEvent)
@@ -122,10 +112,5 @@ public class CoreController : MonoBehaviour
         {
             gcComponent.GetForceByVec(mechanics.windVec,mechanics.WindForce);
         }
-    }
-
-    void OnGameOver(BaseGameEvent gEvent)
-    {
-        Debug.Log("GameOver!");
     }
 }

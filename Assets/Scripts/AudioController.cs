@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,39 +6,34 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    public static Dictionary<string,AudioClip> audioDictionary;
-    public static AudioSource audioClipSource;
+    public Dictionary<string,AudioClip> audioDictionary;
+    public AudioSource audioClipSource;
+    public static AudioController _instance;
 
-    public static void RegisterAudioClip(string name, string url)
+    public void RegisterAudioClip(string name, string url)
     {
         audioDictionary.Add(name,Resources.Load<AudioClip>(url));
     }
 
     void Awake()
     {
+        if (_instance == null) _instance = this;
+
         audioDictionary = new Dictionary<string, AudioClip>();
         audioClipSource = GetComponent<AudioSource>();
 
         //  ¼ÓÒôÐ§
         RegisterAudioClip("Wind", "Audio/SoundFx/windSound");
-
-
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("Music");
-
-        if (objs.Length > 1)
-        {
-            Destroy(this.gameObject);
-        }
-
-        DontDestroyOnLoad(this.gameObject);
     }
 
-    public static void PlayAudioClip(string name)
+    public bool PlayAudioClip(string name)
     {
         AudioClip clip;
         if (audioDictionary.TryGetValue(name, out clip))
         {
             audioClipSource.PlayOneShot(clip);
+            return true;
         }
+        return false;
     }
 }

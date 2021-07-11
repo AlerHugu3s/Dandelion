@@ -10,7 +10,7 @@ public class ChildTrigger : MonoBehaviour
         {
             case "Dandelion":
                 GameEventDispatcher.GetInstance()
-                    .DispatchEvent(new BaseGameEvent(CoreController.GameEventType.DANDELION_GET_PLAYER_WIND, null, coll.gameObject));
+                    .DispatchEvent(new BaseGameEvent(MainMenuController.GameEventType.DANDELION_GET_PLAYER_WIND, null, coll.gameObject));
                 break;
         }
     }

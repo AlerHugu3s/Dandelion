@@ -8,11 +8,13 @@ TagManager:
   - Obstacle
   - Deadzone
   - Music
+  - MainUI
+  - MainUIEventSystem
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - MainUI
   - Water
   - UI
   - BackGround

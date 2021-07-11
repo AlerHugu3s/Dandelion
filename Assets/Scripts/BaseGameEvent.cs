@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static CoreController;
+using static MainMenuController;
 using Object = UnityEngine.Object;
 
 public class BaseGameEvent
